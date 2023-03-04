@@ -1,0 +1,56 @@
+
+/*--------------------------admin page-----------------------*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+
+
+
+}
+.background{
+    
+    background-image: url('');
+    background-size: cover;
+    background-repeat:no-repeat;
+    filter: blur(5px);
+    position: absolute;
+    z-index: -100;
+    position: fixed;
+   justify-content: center;
+    
+}
+   .background img{
+    width: 100%;
+    height:auto;
+   }
+
+.login_From{
+    top: 20%;
+    left: 35%;
+    width: 400px;
+    height: 500px;
+    position: absolute;
+   background-color: rgb(255, 255, 255);
+   padding-left:  50px;
+   padding-right:  50px;
+   border-radius: 21px;
+
+}
+.logo {
+    text-align: center;
+}
+.login_From img{
+    width: auto;
+    height: 200px;
+}
+.col-6 p{
+    font-size: 14px;
+}
+.col-6 a{
+    text-decoration: none;
+}
+/*--------------------------admin page-----------------------*/
+

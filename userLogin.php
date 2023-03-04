@@ -1,3 +1,12 @@
+<?php
+session_start();
+?>
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,6 +23,22 @@
     <title>Document</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="indeex2.php">APOLO</a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        
+      </ul>
+      <form class="d-flex">
+        <button class="btn btn-outline-success" type="submit"><a class="text-decoration-none"href="">Login</a></button>
+      </form>
+    </div>
+  </div>
+</nav>
 <section>
 <section class="vh-100" style="background-color: #508bfc;">
   <div class="container py-5 h-100">
@@ -23,23 +48,36 @@
           <div class="card-body p-5 text-center">
 
             <h3 class="mb-5">Sign in</h3>
-
+            <form action="code.php" method="post">
             <div class="form-outline mb-4">
-              <input type="email" id="typeEmailX-2" class="form-control form-control-lg" placeholder="Enter email...">
+              <input type="text" id="typeEmailX-2" name="userName" class="form-control form-control-lg" placeholder="Enter username">
             </div>
 
             <div class="form-outline mb-4">
-              <input type="password" id="typePasswordX-2" class="form-control form-control-lg" placeholder="Enter email...">
+              <input type="password" id="typePasswordX-2" name = "userpasw" class="form-control form-control-lg" placeholder="Enter password">
             </div>
 
             <!-- Checkbox -->
             <div class="form-check d-flex justify-content-start mb-4">
-              <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
-              <label class="form-check-label" for="form1Example3"> Remember password </label>
+              <label class="form-check-label" for="form1Example3"> Have you have acount already ! </label> <a class="text-decoration-none"href="user_register.php">   Register</a>
             </div>
 
-            <button class="btn btn-primary btn-lg btn-block w-100" type="submit">Login</button>
+            <button class="btn btn-primary btn-lg btn-block w-100" name ="btnUserlogign"type="submit">Login</button>
+                <!--message--->
+    <?php
+          if(isset($_SESSION['success']) && $_SESSION['success'] !='')
+          {
+            echo $_SESSION['success'];
+            unset($_SESSION['success']);
+          }
 
+          if(isset($_SESSION['status']) && $_SESSION['status'] !='')
+          {
+            echo $_SESSION['status'];
+            unset($_SESSION['status']);
+          }
+        ?>
+</form>
             <hr class="my-4">
 
             <div class="text-center mb-3">
@@ -67,6 +105,10 @@
     </div>
   </div>
 </section>
+<div class="text-center p-2 " style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2020 Copyright:
+      <a class="text-white" href="">konkhkea.com</a>
+</div>
 </section>
 </body>
 </html>

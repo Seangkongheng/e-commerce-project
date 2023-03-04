@@ -1,3 +1,18 @@
+<?php 
+session_start();
+$connect=new Mysqli('localhost','root','','db_ss1');
+	//initialize cart if not set or is unset
+	if(!isset($_SESSION['cart'])){
+		$_SESSION['cart'] = array();
+	}
+ 
+	//unset quantity
+	unset($_SESSION['qty_array']);
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,14 +35,14 @@
  <section id="navbar">
    <nav class="navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top ">
         <div class="container">
-            <a class="navbar-brand d-flex justify-content-between order-lg-0 " href="#"> 
+            <a class="navbar-brand d-flex justify-content-between order-lg-0 " href="indeex2.php"> 
                 <!--<img src="imag/brand.png" alt="site icon">-->
                     <span class="text-uppercase fw-lighter ms-2">APOLO</span>
             </a>
             <div class="order-lg-2 nav-btns ">
                 <button type="button" class="btn position-relative">
                     <i class="fa fa-shopping-cart"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge bg-primary"> 5 </span>
+                    <span class="position-absolute top-0 start-100 translate-middle badge bg-primary"> <?php echo count($_SESSION['cart']); ?></span>
 
                 </button>
                 <button type="button" class="btn position-relative">
@@ -72,73 +87,127 @@
         </div>
     </nav>
 </section>
-<section id="prodcutdetail" class="prodcutdetail">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-5 col-ms-12 col-12">
-                <img class="img-fluid w-100 pb-1 "src="image/top_rated_3.jpg" id="MainImage" alt="">
-                <div class="small-image-group ">
-                    <div class="smial-img-col">
-                        <img src="image/special_product_2.jpg" class="small-image" width="100%"alt="">
-                    </div>
-                    <div class="smial-img-col">
-                        <img src="image/special_product_1.jpg" class="small-image"  width="100%"alt="">
-                    </div>
-                    <div class="smial-img-col">
-                        <img src="image/special_product_3.jpg" class="small-image"  width="100%"alt="">
-                    </div>
-                    <div class="smial-img-col">
-                        <img src="image/special_product_4.jpg "class="  small-image "  width="100%"alt="">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-ms-12 col-12">
-                <h6 class="text-muted text-uppercase w-100 fst-italic">home/T-shirt</h6>
-                <!--titile clothes-->
-                <h3>Men's fashion T shirt</h3>
-                <h6 style=" font-size: 0px;">T-shirt is the best for your and have multiple choice for your favarite </h6>
-                      <div class="rating mt-3">
-                                 <span class="text-primary"><i class="fa-regular fa-star "></i></span>
-                                 <span class="text-primary"><i class="fa-regular fa-star"></i></span>
-                                 <span class="text-primary"><i class="fa-regular fa-star"></i></span>
-                                 <span class="text-primary"><i class="fa-regular fa-star"></i></span>
-                                 <span class="ttext-primary"><i class="fa-regular fa-star"></i></span>
-                         </div>
-                      
-                <h6 class="text-danger text-decoration-line-through">$200 </h6><span class="text-warning">(50% of)</span>
-                <h2>$100 </h2>
-                <div class="choose">
-                <select class="my-3 form-select"name="" id="">
-                    <option value="">Select Size</option>
-                    <option value="">XL</option>
-                    <option value="">XXL</option>
-                    <option value="">smiall</option>
-                    <option value="">larght</option>
-                </select> 
-                </div>
-                <div class="group_addtocard d-flex">   
-                     <input class="form-control "type="number" name="number" id="">
-                    <a href="userLogin.php"> <button class="addTo_card"> <i class="fa-solid fa-cart-shopping"></i>Add to card</button></a>
-                </div>
-                <h4 class="mt-5 text-muted">Decription</h4>
-                <ul>
-                    <li>hello my name is seang kong heng</li>
-                    <li>hello my name is seang kong heng</li>
-                    <li>hello my name is seang kong heng</li>
-                
-                </ul>
-                <h4 class=" mt-5 text-muted">material & case</h4>
-                <ul>
-                    <li>hello my name is seang kong heng</li>
-                    <li>hello my name is seang kong heng</li>
-                    <li>hello my name is seang kong heng</li>
-                
-                </ul>
-               <a href=" "><button class="buyNow" onclick="alert('')"> <i class="fa-solid fa-cart-shopping"></i>buy now</button></a> 
+<?php
+//info message
+if(isset($_SESSION['message'])){
+    ?>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-6">
+            <div class="alert alert-info text-center">
+                <?php echo $_SESSION['message']; ?>
             </div>
         </div>
     </div>
+    <?php
+    unset($_SESSION['message']);
+}
+?>
+<section id="prodcutdetail" class="prodcutdetail">
+    <div class="container">
+        <div class="row">
+
+        <?php 
+        $id=$_GET['id'];
+        $detail="SELECT * FROM tbl_product where product_id ='$id'";
+        $detailproduct =$connect->query($detail);
+            while($row= mysqli_fetch_assoc($detailproduct))
+            {
+
+                ?>
+ <div class="col-lg-5 col-ms-12 col-12">
+
+                <img class="img-fluid w-100 pb-1 "src="./upload/<?php echo $row["image_product"]?>" id="MainImage" alt="">
+                <div class="small-image-group ">
+                    <div class="smial-img-col">
+                        <img src="./upload/<?php echo $row["image_product1"]?>" class="small-image" width="100%"alt="">
+                    </div>
+                    <div class="smial-img-col">
+                        <img src="./upload/<?php echo $row["image_product2"]?>" class="small-image"  width="100%"alt="">
+                    </div>
+                    <div class="smial-img-col">
+                        <img src="./upload/<?php echo $row["image_product3"]?>" class="small-image"  width="100%"alt="">
+                    </div>
+                    <div class="smial-img-col">
+                        <img src="./upload/<?php echo $row["image_product4"]?> "class="  small-image "  width="100%"alt="">
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="col-lg-6 col-ms-12 col-12">
+                <h6 class="text-muted text-uppercase w-100 fst-italic">home/<?php echo $row["product_name"]?></h6>
+                <!--titile clothes-->
+               
+                          <?php echo $row["product_name"]?>
+                            
+                            <h6 style=" font-size: 0px;"> </h6>
+                                <div class="rating mt-3">
+                                            <span class="text-primary"><i class="fa-regular fa-star "></i></span>
+                                            <span class="text-primary"><i class="fa-regular fa-star"></i></span>
+                                            <span class="text-primary"><i class="fa-regular fa-star"></i></span>
+                                            <span class="text-primary"><i class="fa-regular fa-star"></i></span>
+                                            <span class="ttext-primary"><i class="fa-regular fa-star"></i></span>
+                                    </div>
+                                
+                            <h6 class="text-danger text-decoration-line-through"></h6><span class="text-warning"></span>
+                            <p>Price  <?php echo $row['price']?>$</p>
+                            <span class="fw-bold"><p class="text-danger"></p></span>
+                            <h2></h2>
+                            
+                            <div class="choose">
+                            <!--<select class="my-3 form-select"name="" id="">
+                                <option value="">Select Size</option>
+                                <option value="">XL</option>
+                                <option value="">XXL</option>
+                                <option value="">smiall</option>
+                                <option value="">larght</option>
+                            </select> -->
+                            </div>
+                            <!--<div class="group_addtocard d-flex">   
+                                <input class="form-control "type="number" name="Product_QTY" value="1">
+                            
+                            </div>-->
+                            <h4 class="mt-5 text-muted"></h4>
+                            <ul>
+                           <?php echo $row['decription'] ?> ;
+                           
+                            </ul>
+                            <h4 class=" mt-5 text-muted">material & case</h4>
+                            <ul>
+                            <?php echo $row['decription'] ?>
+                            </ul>
+                            
+                            <a href="viewcart.php?idProduct=<?php echo $id ?>"><button name="submit" type="submit"class="addTo_card"><i class="fa-solid fa-cart-shopping"></i>Add to card</button></a>
+                            <a href=" "><button class="buyNow mt-5" onclick="alert('')"> <i class="fa-solid fa-cart-shopping"></i>buy now</button></a> 
+                            <?php 
+	//check if product is already in the cart
+	if(!in_array($_GET['id'], $_SESSION['cart'])){
+		array_push($_SESSION['cart'], $_GET['id']);
+		$_SESSION['message'] = 'Product added to cart';
+	}
+	else{
+		$_SESSION['message'] = 'Product already in cart';
+        
+	}
+ 
+?>
+            </div>
+
+            
+        </div>
+    </div>
+ <?php
+
+            }
+        ?>
+  
+     
 </section>
+
+
+
 <section id="special" class="">
     <div class="container">
         <div class="title text-center py-5 ">
@@ -308,7 +377,7 @@
           <div class="col-md-5 col-12">
             <!-- Email input -->
             <div class="form-outline form-white mb-4">
-              <input type="email" id="form5Example21" class="form-control"placeholder="Email address...">
+              <input type="email" id="form5Example21" class="form-control w-100"placeholder="Email address...">
             </div>
           </div>
           <!--Grid column-->

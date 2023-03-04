@@ -1,3 +1,18 @@
+<?php 
+session_start();
+$connect=new Mysqli('localhost','root','','db_ss1');
+$product="SELECT * FROM tbl_product";
+$all_product =$connect->query($product);
+
+if(!isset($_SESSION['cart'])){
+    $_SESSION['cart'] = array();
+}
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,17 +31,77 @@
    
 </head>
 <body>
+<div class="fixed-top"> 
+<nav class="navbar navbar-light bg-light p-0">
+  
+<div class="div container d-flex  justify-content-between  align-items-center h-20 d-inline-block">
+    <div class="logo">
+        <span class="bg-success p-1 text-white rounded">Welcome </span>  | 
+        
+        
+        
+        <?php
+        if(!isset( $_SESSION['user']))
+        {
+            echo " ";
+        }
+        else
+        {
+            echo  $_SESSION['user'];
+        }
+        ?>  
+    </div>
+
+    <div class="logingLogout mt-3">
+      
+    <p class="small" >
+        <?php
+        if(!isset($_SESSION['user']))
+        {
+                echo " <a href='user_register.php'class='text-decoration-none  text-dark'>Resgiter</a>";
+        }
+        else
+        {
+            echo " ";
+        }
+        ?>
+
+    
+    
+    
+    | My acount 
+            <?php
+
+            if(isset($_SESSION['user'])){
+            
+            echo"
+           <a href='logout.php'class='text-decoration-none  text-dark'> | Logout</a>";
+            }
+            else
+            {
+            echo"
+            <a href='userLogin.php' class='text-decoration-none text-dark'> | login</a>";
+            }
+
+            ?>
+</p>
+    </div>
+</div>
+</nav>
     <!---Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top ">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-4">
+    
         <div class="container">
-            <a class="navbar-brand d-flex justify-content-between order-lg-0 " href="#"> 
+           
+            <a class="navbar-brand d-flex justify-content-between order-lg-0 " href="indeex2.php"> 
+            
                 <!--<img src="imag/brand.png" alt="site icon">-->
                     <span class="text-uppercase fw-lighter ms-2">APOLO</span>
             </a>
             <div class="order-lg-2 nav-btns ">
                 <button type="button" class="btn position-relative">
-                    <i class="fa fa-shopping-cart"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge bg-primary"> 5 </span>
+                     <a href="viewcart.php"><i class="fa fa-shopping-cart"></i></a> 
+                    <span class="position-absolute top-0 start-100 translate-middle badge bg-primary"><?php echo count($_SESSION['cart']); ?> </span>
 
                 </button>
                 <button type="button" class="btn position-relative">
@@ -36,16 +111,29 @@
                 </button>
                 <button type="button" class="btn position-relative">
                     <div class="icon">
-                        <input type="search" name="" id=""placeholder="search..">
-                        <a href="">
-                        <i class="fa-sharp fa-solid fa-magnifying-glass"></i> 
-                        </a>
-                      </div>
+                        
+                      <form action="resultsearch.php" method="get">
+                            <input type="text" name="user_query" id=""plasceholder="Search">
+                               
+                             <input type="submit" name="search"  value="search"> <i class="fa-sharp fa-solid fa-magnifying-glass"></i> 
+                            </div>
+
+                          
+                   
+                      </form>
+                     
+                      
             </div>
+           
             <button class="navbar-toggler border-0 " type="button" data-bs-toggle="collapse" data-bs-target="#NavMenu">
                 <span class="navbar-toggler-icon"> </span>      
             </button>
+          
             <div class="collapse navbar-collapse order-lg-1" id="NavMenu">
+
+               
+
+
                 <ul class="navbar-nav mx-auto text-center ">
                     <li class="nav-item px-2 py-2">
                         <a href="#" class="nav-link text-uppercase text-dark" > home</a>
@@ -70,6 +158,7 @@
             </div>
         </div>
     </nav>
+    </div>
    <!--end of narbar--->
     <header id="header" class="vh-100 carousel slide " data-bs-ride="carousel" style="padding-top: 104px ">
         <div class="container h-100 d-flex align-items-center carousel-inner">
@@ -94,20 +183,69 @@
 
   <!--colection--->
 <section id="collection" class=""> 
+
     <div class="container">
-        <div class="title text-center mt-5">
-            <h2 class="posistion-relative text-uppercase text-danger fw-bold "> New collection</h2>
-        </div>
+ 
+       
         <div class="row g-0">
-            <div class="d-flex flex-wrap justify-content-center mt-5 filter-button-group ">
-                <button type="button" class="btn m-2 text-dark active-filter-btn" data-filter="*"> all</button>
-                <button type="button" class="btn m-2 text-dark " data-filter=".best"> Best Seller</button>
-                <button type="button" class="btn m-2 text-dark" data-filter=".feat"> Featured</button>
-                <button type="button" class="btn m-2 text-dark" data-filter=".new"> new arrival</button>
-             </div>
+
+        <?php 
+       
+        $connect=new Mysqli('localhost','root','','db_ss1');
+        $catagory="SELECT * FROM tbl_category";
+        $all_catagroy =$connect->query($catagory);
+
+        while($row = mysqli_fetch_assoc($all_catagroy)){
+            ?>
+
+                <div class="d-flex flex-wrap justify-content-center filter-button-group ">
+                <button type="button" class="btn m-2 text-dark " data-filter=".best"><?php echo $row["category_name"];?></button>
+                </div>
+
+            <?php
+
+        }
+     ?>         <div class="title text-center mt-5">
+     <h2 class="posistion-relative text-uppercase text-danger fw-bold "> New collection</h2>
+ </div>
             <div class="collection-list mt-4 row gx-0 gy-3">
+            <?php 
+
+
+
+
+        
+            $all_product =$connect->query($product);
+                    while($row = mysqli_fetch_assoc($all_product)){
+                        $id= $row['product_id'];
+                    ?>
                 <div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
+                  
                     <div class="collection_image">
+                        <div class="blox-image">
+                        <a href='detailProduct.php?id=<?php echo $id ?>'><img src="./upload/<?php echo $row["image_product"]?>" alt="" class="w-100"></a> 
+                    </div>
+
+                    <span class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>        
+                    </div>
+                    <div class="text-center">
+                            <div class="rating mt-3">
+                                 <span class="text-danger"><i class="fa-regular fa-star "></i></span>
+                                 <span class="text-danger"><i class="fa-regular fa-star"></i></span>
+                                 <span class="text-danger"><i class="fa-regular fa-star"></i></span>
+                                 <span class="text-danger"><i class="fa-regular fa-star"></i></span>
+                                 <span class="text-danger"><i class="fa-regular fa-star"></i></span>
+                              </div>
+                                 <p class="text-capitalize my-1"><?php echo $row ['product_name'] ?></p>
+                                     <span class="fw-bold"><p class="text-danger">$<?php echo $row['price'] ?> </p></span>
+                    </div>
+                </div>
+                    <?php
+                }
+            
+           
+                    ?>
+                   <!-- <div class="collection_image">
                    <a href="detailProduct.php"><img src="image/top_rated_3.jpg" alt="" class="w-100"></a> 
                     <span class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>        
                     </div>
@@ -314,9 +452,9 @@
            </div>
         </div>
     </div>
-  </section>
+  </section>-->
   <!--specail product-->
-<section id="special" class="py-5">
+<!--<section id="special" class="py-5">
     <div class="container">
         <div class="title text-center py-5 ">
             <h2 class="text-uppercase text-danger fw-bold">specail selection</h2>
@@ -325,7 +463,7 @@
             <div class="col-md-6 col-lg-4 col-xl-3 p-2">
                 <div class="specail_image position-relative overflow-hidden ">
                     <img src="image/c_shirt-girl.png" alt="" class="w-100">
-                    <span class="position-absolute text-primary fs-4 d-flex align-items-center justify-content-center">
+                    <span class="position-absolute  text-primary fs-4 d-flex align-items-center justify-content-center">
                      <i class="fa-solid fa-heart"></i>
                     </span>
                 </div>
@@ -441,13 +579,14 @@
             </div>
         </div>
     </div>
-</section>
+</section>-->
 
 <!--specail product end-->
 <!--block-->
 <!--block end end-->
+<h1 class="text-center text-danger fw-bold text-uppercase mt-5" >Information</h1>
 <section id="offer" class="py-5" >
-    <div class="container">
+    <div class="container ">
         <div class="row d-flex align-items-center text-center justify-content-lg-start text-lg-start">
             <div class="offers-containt">
                 <span class="text-white">Discont up t0 50%</span>
@@ -548,45 +687,21 @@
                 <img src="image/top_rated_1 (1).jpg" alt="" class="img-fluid pe-3 w-25">
                 <div class="">
                     <p class="mb-0">brlue shirt</p>
-                    <span>$ 20.00</span>
+                    <span class="text-danger">$ 20.00</span>
                 </div>
             </div>
             <div class="d-flex aling-items-start">
                 <img src="image/top_rated_1 (1).jpg" alt="" class="img-fluid pe-3 w-25">
                 <div class="">
                     <p class="mb-0">brlue shirt</p>
-                    <span>$ 20.00</span>
+                    <span class="text-danger">$ 20.00</span>
                 </div>
             </div>
             <div class="d-flex aling-items-start">
                 <img src="image/top_rated_1 (1).jpg" alt="" class="img-fluid pe-3 w-25">
                 <div class="">
                     <p class="mb-0">brlue shirt</p>
-                    <span>$ 20.00</span>
-                </div>
-            </div>
-            </div>
-            <div class="col-md-6 col-lg-4 row g-3">
-            <h3 class="fs-5">Top rated</h3>
-            <div class="d-flex aling-items-start">
-                <img src="image/top_rated_1 (1).jpg" alt="" class="img-fluid pe-3 w-25">
-                <div class="">
-                    <p class="mb-0">brlue shirt</p>
-                    <span>$ 20.00</span>
-                </div>
-            </div>
-            <div class="d-flex aling-items-start">
-                <img src="image/top_rated_1 (1).jpg" alt="" class="img-fluid pe-3 w-25">
-                <div class="">
-                    <p class="mb-0">brlue shirt</p>
-                    <span>$ 20.00</span>
-                </div>
-            </div>
-            <div class="d-flex aling-items-start">
-                <img src="image/top_rated_1 (1).jpg" alt="" class="img-fluid pe-3 w-25">
-                <div class="">
-                    <p class="mb-0">brlue shirt</p>
-                    <span>$ 20.00</span>
+                    <span class="text-danger">$ 20.00</span>
                 </div>
             </div>
             </div>
@@ -596,21 +711,45 @@
                 <img src="image/top_rated_1 (1).jpg" alt="" class="img-fluid pe-3 w-25">
                 <div class="">
                     <p class="mb-0">brlue shirt</p>
-                    <span>$ 20.00</span>
+                    <span class="text-danger">$ 20.00</span>
                 </div>
             </div>
             <div class="d-flex aling-items-start">
                 <img src="image/top_rated_1 (1).jpg" alt="" class="img-fluid pe-3 w-25">
                 <div class="">
                     <p class="mb-0">brlue shirt</p>
-                    <span>$ 20.00</span>
+                    <span class="text-danger">$ 20.00</span>
                 </div>
             </div>
             <div class="d-flex aling-items-start">
                 <img src="image/top_rated_1 (1).jpg" alt="" class="img-fluid pe-3 w-25">
                 <div class="">
                     <p class="mb-0">brlue shirt</p>
-                    <span>$ 20.00</span>
+                    <span class="text-danger">$ 20.00</span>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-6 col-lg-4 row g-3">
+            <h3 class="fs-5">Top rated</h3>
+            <div class="d-flex aling-items-start">
+                <img src="image/top_rated_1 (1).jpg" alt="" class="img-fluid pe-3 w-25">
+                <div class="">
+                    <p class="mb-0">brlue shirt</p>
+                    <span class="text-danger">$ 20.00</span>
+                </div>
+            </div>
+            <div class="d-flex aling-items-start">
+                <img src="image/top_rated_1 (1).jpg" alt="" class="img-fluid pe-3 w-25">
+                <div class="">
+                    <p class="mb-0">brlue shirt</p>
+                    <span class="text-danger">$ 20.00</span>
+                </div>
+            </div>
+            <div class="d-flex aling-items-start">
+                <img src="image/top_rated_1 (1).jpg" alt="" class="img-fluid pe-3 w-25">
+                <div class="">
+                    <p class="mb-0">brlue shirt</p>
+                    <span class="text-danger">$ 20.00</span>
                 </div>
             </div>
             </div>
@@ -690,7 +829,7 @@
           <div class="col-md-5 col-12">
             <!-- Email input -->
             <div class="form-outline form-white mb-4">
-              <input type="email" id="form5Example21" class="form-control"placeholder="Email address...">
+              <input  type="email" id="form5Example21" class="form-control w-100"placeholder="Email address...">
             </div>
           </div>
           <!--Grid column-->

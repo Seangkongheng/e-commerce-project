@@ -35,7 +35,7 @@ $connect=new Mysqli('localhost','root','','Ecommerceproject');
             <input class="form-control"type="text" name="txt_id" id="txt_id" placeholder="&#Xf007;  Please  username"  style="font-family:Arial, FontAwesome">
             <label for="">password</label>
             <input class="form-control"type="password" name="txt_password" id="txt_password" placeholder="&#Xf023;  Please  Password "style="font-family:Arial, FontAwesome" >
-            <input class="btn btn-primary form-control mt-3" type="submit" value="LOING" >
+            <a href="adminpage.php"><input class="btn btn-primary form-control mt-3" type="submit" value="LOING" ></a>
             <div class="row mt-2">
                 <div class="col-6">
                     <p> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">   you stay login</p>
