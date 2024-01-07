@@ -210,11 +210,7 @@ if(!isset($_SESSION['cart'])){
  </div>
             <div class="collection-list mt-4 row gx-0 gy-3">
             <?php 
-
-
-
-
-        
+    
             $all_product =$connect->query($product);
                     while($row = mysqli_fetch_assoc($all_product)){
                         $id= $row['product_id'];

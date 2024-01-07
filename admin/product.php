@@ -424,7 +424,7 @@ include('include/navbar.php');
                   <td><?php  echo $row["category_name"]; ?> </td>
                   <td><?php  echo $row["price"]; ?> </td>
                   <td>
-                 <img src="<?php echo "upload/" .$row['image_product'];?>"width ="50px" height="50px"alt="">
+                 <!-- <img src="<?php echo "upload/" .$row['image_product'];?>"width ="50px" height="50px"alt="">
                 </td>
                 <td> 
                     <img src="<?php echo "upload/" .$row['image_product1'];?>"width ="50px" height="50px"alt="">
@@ -439,14 +439,14 @@ include('include/navbar.php');
                     <img src="<?php echo "upload/" .$row['image_product4'];?>"width ="50px" height="50px"alt="">
                 </td>
                 <td><?php  echo $row["decription"]; ?> </td>
-                  <td>
+                  <td> -->
 
 
                   <?php
                  
                   ?>
                  <form action="productEdit.php" method="POST">
-                  <input type="hidden" name="catagoryID_id" value=" <?php echo $row["category_id"]; ?>">
+                    <input type="hidden" name="catagoryID_id" value=" <?php echo $row["category_id"]; ?>">
                     <input type="hidden" name="prodcutedit" value="<?php  echo $row['product_id'];?>  ">
                      <button type="submit" id="'.$row['category_id'].'" name ="btneditpoduct" class="btn btn-primary text-uppercase"> Edit</button>
                   </form>
@@ -478,3 +478,4 @@ include('include/navbar.php');
 include('include/script.php');
 include('include/footer.php');
 ?>
+

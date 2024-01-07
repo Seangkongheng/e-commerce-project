@@ -217,6 +217,7 @@ if(isset($_POST['updateCatagory']))
         header('location: catagory.php');
     }
 }
+
 //insert product
 
 if(isset($_POST['insertProdcut']))
@@ -585,7 +586,7 @@ $result =mysqli_query($connect,$query);
 
 
 if(mysqli_num_rows($result)==1)
-{
+{ 
  $_SESSION['user']=$userName_login_user;
 $rows=mysqli_fetch_array($result);
 header("Location: indeex2.php");

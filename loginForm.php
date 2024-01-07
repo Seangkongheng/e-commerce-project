@@ -45,6 +45,7 @@ $connect=new Mysqli('localhost','root','','Ecommerceproject');
                 </div>  
             </div>
         </form>
+        
     </div>   
 </section>
 </body>

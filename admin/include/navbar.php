@@ -1,20 +1,29 @@
 
 
-
+<style>
+    .navbar-nav{
+        background-color: #0F6900;
+    }
+    .sidebar-brand-text img{
+        width: 80px;
+        height: 80px;
+        margin-top: 50px;
+    }
+</style>
 
 <!-- Sidebar -->
- <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+ <ul class="navbar-nav bg- sidebar sidebar-dark accordion" id="accordionSidebar">
 
 <!-- Sidebar - Brand -->
 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
     <div class="sidebar-brand-icon rotate-n-15">
-        <i class="fas fa-laugh-wink"></i>
+         <div class="sidebar-brand-text mx-3"> <img  src="image/Khmer-removebg-preview" alt=""> KCTT</div>
     </div>
-    <div class="sidebar-brand-text mx-3">APOLO <sup>2</sup></div>
+   
 </a>
 
 <!-- Divider -->
-<hr class="sidebar-divider my-0">
+<hr class="sidebar-divider my-0 mt-5">
 
 <!-- Nav Item - Dashboard -->
 <li class="nav-item active">
@@ -43,7 +52,7 @@
             <h6 class="collapse-header">Custom Components:</h6>
             <a class="collapse-item" href="register.php">Admin</a>
             <a class="collapse-item" href="product.php">product</a>
-            <a class="collapse-item" href="product_size">product_size</a>
+            <!-- <a class="collapse-item" href="product_size">product_size</a> -->
             <a class="collapse-item" href="catagory.php">catagroy</a>
             <a class="collapse-item" href="customer.php">customer</a>
             <a class="collapse-item" href="order.php">order</a>
@@ -124,11 +133,6 @@
 </div>
 
 <!-- Sidebar Message -->
-<div class="sidebar-card d-none d-lg-flex">
-    <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-    <p class="text-center mb-2"><strong>APOLO</strong> is packed with premium features, components, and more!</p>
-    <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
-</div>
 
 </ul>
 <!-- End of Sidebar -->

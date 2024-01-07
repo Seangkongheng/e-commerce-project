@@ -448,6 +448,7 @@ if(isset($_POST['updateNavbar']))
         header('location: nanbarItem.php');
     }
 }
+
 //insert Product Zise
     if(isset($_POST['btnAddsize'])){
         $sizeName=$_POST['sizeNameadd'];
